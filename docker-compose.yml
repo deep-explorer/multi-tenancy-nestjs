@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  main-api:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database 
+      - database_1
+      # - business-api
+
+  # business-api:
+  #   build: ./api
+  #   ports: 8081
+
+  database:
+    container_name: postgres
+    image: postgres:14.3 # postgres or mongo
+    ports:
+      - 5432
+    restart: always
+    environment:
+      POSTGRES_DB: nestjs-multi-tenant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  database_1:
+    container_name: postgres_1
+    image: postgres:14.3 # postgres or mongo
+    ports:
+      - 5433
+    restart: always
+    environment:
+      POSTGRES_DB: nestjs-multi-tenant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    
